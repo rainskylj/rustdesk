@@ -31,7 +31,14 @@ class ServerModel with ChangeNotifier {
   bool _fileOk = false;
   bool _clipboardOk = false;
   bool _showElevation = false;
-  bool hideCm = false;
+  bool _hideCm = false; // 私有字段，类内可直接访问
+  bool get hideCm => _hideCm; // 公共 getter
+  set hideCm(bool value) { // 公共 setter
+    if (_hideCm != value) {
+      _hideCm = value;
+      notifyListeners(); // 通知UI刷新
+    }
+  }
   int _connectStatus = 0; // Rendezvous Server status
   String _verificationMethod = "";
   String _temporaryPasswordLength = "";
