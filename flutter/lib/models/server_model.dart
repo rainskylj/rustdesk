@@ -31,13 +31,16 @@ class ServerModel with ChangeNotifier {
   bool _fileOk = false;
   bool _clipboardOk = false;
   bool _showElevation = false;
-  bool _hideCm = false; // 私有字段，类内可直接访问
-  bool get hideCm => _hideCm; // 公共 getter
-  set hideCm(bool value) { // 公共 setter
-    if (_hideCm != value) {
-      _hideCm = value;
-      notifyListeners(); // 通知UI刷新
-    }
+  bool get hideCm {
+    return option2bool(
+        'allow-hide-cm', bind.mainGetOptionSync(key: 'allow-hide-cm'));
+  }
+  
+  set hideCm(bool value) {
+    bind.mainSetOption(
+        key: 'allow-hide-cm',
+        value: bool2option('allow-hide-cm', value));
+    notifyListeners();
   }
   int _connectStatus = 0; // Rendezvous Server status
   String _verificationMethod = "";
