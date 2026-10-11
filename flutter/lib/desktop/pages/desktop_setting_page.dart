@@ -1608,8 +1608,7 @@ class _SafetyState extends State<_Safety> with AutomaticKeepAliveClientMixin {
               model.verificationMethod == kUsePermanentPassword;
           onHideCmChanged(bool? b) {
             if (b != null) {
-              bind.mainSetOption(
-                  key: 'allow-hide-cm', value: bool2option('allow-hide-cm', b));
+              model.hideCm = b;   // 交给 setter 写配置并通知 UI
             }
           }
 
@@ -1621,11 +1620,10 @@ class _SafetyState extends State<_Safety> with AutomaticKeepAliveClientMixin {
                 child: Row(
                   children: [
                     Checkbox(
-                            value: model.hideCm,
-                            onChanged: enabled && enableHideCm
-                                ? onHideCmChanged
-                                : null)
-                        .marginOnly(right: 5),
+                        value: model.hideCm,
+                        onChanged: enabled && enableHideCm ? onHideCmChanged : null,
+                      )
+                                              .marginOnly(right: 5),
                     Expanded(
                       child: Text(
                         translate('Hide connection management window'),
